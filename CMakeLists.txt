@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 
 set(CMAKE_CXX_COMPILER /usr/bin/g++-14)
 
-project(lab5)
+project(lab6)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -21,14 +21,27 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(googletest)
 
-add_executable(${CMAKE_PROJECT_NAME}_exe src/main.cpp)
+set(PROJECT_SOURCES
+    src/npc.cpp
+    src/bear.cpp
+    src/squirrel.cpp
+    src/orc.cpp
+    src/fight_logic.cpp
+)
 
-target_include_directories(${CMAKE_PROJECT_NAME}_exe PRIVATE include)
+add_executable(main 
+    ../src/main.cpp 
+    ${PROJECT_SOURCES}
+)
+#target_include_directories(npc_lib PUBLIC include)
 # Добавление тестов
-#enable_testing()
+enable_testing()
 
-#add_executable(tests test/test1.cpp)
-#target_link_libraries(tests PRIVATE ${CMAKE_PROJECT_NAME}_lib gtest_main gtest pthread)
+add_executable(tests 
+  test/test1.cpp 
+  ${PROJECT_SOURCES}
+)
+target_link_libraries(tests PRIVATE gtest_main gtest pthread)
 
 # Добавление тестов в тестовый набор
-#add_test(NAME MyProjectTests COMMAND tests)
+add_test(NAME MyProjectTests COMMAND tests)
