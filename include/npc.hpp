@@ -23,12 +23,15 @@ struct Observer {
     virtual ~Observer() = default;
 };
 
-struct NPC : public std::enable_shared_from_this<NPC> {
+class NPC : public std::enable_shared_from_this<NPC> {
+protected:
     NpcType type;
+    std::string name;
     int x{0};
     int y{0};
     std::vector<std::shared_ptr<Observer>> observers;
 
+public:
     NPC(NpcType t, int _x, int _y);
     NPC(NpcType t, std::istream &is);
 
